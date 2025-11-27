@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/keyInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Key (e.g., Main, Tasbeeha)"
+        android:inputType="text"
+        android:singleLine="true"
+        android:padding="16dp"
+        android:background="@android:drawable/edit_text" />
+
+    <EditText
+        android:id="@+id/valueInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Display Name (e.g., Main, Tasbeeha)"
+        android:inputType="text"
+        android:singleLine="true"
+        android:padding="16dp"
+        android:background="@android:drawable/edit_text" />
+
+</LinearLayout>

@@ -1,0 +1,3 @@
+com.followme.attendance.test
+style WhiteBackgroundDialogTheme
+style WhiteBackgroundTheme
