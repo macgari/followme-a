@@ -1,6 +1,0 @@
-com.followme.attendance.test.app-annotation-experimental-1.3.0-0 /Users/mac/.gradle/caches/transforms-3/49533537bb608b8efb417ab097535468/transformed/annotation-experimental-1.3.0/res
-com.followme.attendance.test.app-core-1.5.0-1 /Users/mac/.gradle/caches/transforms-3/ea74765fadd3ae3551cf4a5e2121a763/transformed/core-1.5.0/res
-com.followme.attendance.test.app-androidTest-2 /Users/mac/Documents/git/followme-m/followme-i/followme-a/app/build/generated/res/resValues/androidTest/debug
-com.followme.attendance.test.app-mergeDebugAndroidTestResources-3 /Users/mac/Documents/git/followme-m/followme-i/followme-a/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
-com.followme.attendance.test.app-mergeDebugAndroidTestResources-4 /Users/mac/Documents/git/followme-m/followme-i/followme-a/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
-com.followme.attendance.test.app-merged_res-5 /Users/mac/Documents/git/followme-m/followme-i/followme-a/app/build/intermediates/merged_res/debugAndroidTest

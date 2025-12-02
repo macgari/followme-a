@@ -32,7 +32,10 @@ data class AuthResponse(
     val id: String?,
     
     @SerializedName("role")
-    val role: String?
+    val role: String?,
+
+    @SerializedName("canEditTags")
+    val canEditTags: Boolean?
 )
 
 data class UserInfo(
@@ -46,7 +49,10 @@ data class UserInfo(
     val email: String?,
     
     @SerializedName("role")
-    val role: String?
+    val role: String?,
+
+    @SerializedName("canEditTags")
+    val canEditTags: Boolean?
 )
 
 // ========== Token Validation Response ==========

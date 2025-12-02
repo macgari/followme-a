@@ -102,6 +102,7 @@ class ApiClient(private val preferencesManager: PreferencesManager) {
                     // Extract user ID and role from various response formats
                     val userId = body.user?.id ?: body.teacher?.id ?: body.id
                     val role = body.user?.role ?: body.teacher?.role ?: body.role
+                    val canEditTags = body.canEditTags ?: body.user?.canEditTags ?: body.teacher?.canEditTags ?: false
                     
                     val expiresAt = System.currentTimeMillis() + (body.expiresIn * 1000L)
                     
@@ -110,7 +111,8 @@ class ApiClient(private val preferencesManager: PreferencesManager) {
                         expiresIn = body.expiresIn,
                         expiresAt = expiresAt,
                         userId = userId,
-                        role = role
+                        role = role,
+                        canEditTags = canEditTags
                     )
                     
                     // Save token

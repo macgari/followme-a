@@ -55,7 +55,10 @@ data class AuthToken(
     val userId: String? = null,
     
     @SerializedName("role")
-    val role: String? = null
+    val role: String? = null,
+
+    @SerializedName("canEditTags")
+    val canEditTags: Boolean = false
 ) {
     fun isExpired(): Boolean {
         return System.currentTimeMillis() >= expiresAt

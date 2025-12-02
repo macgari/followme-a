@@ -467,6 +467,14 @@ class TagManagementActivity : AppCompatActivity() {
                 }
             }
             .setNeutralButton("Save Tag") { _, _ ->
+                // Check if there's pending data in the inputs
+                val key = keyInput.text.toString().trim()
+                val value = valueInput.text.toString().trim()
+                
+                if (key.isNotEmpty() && value.isNotEmpty()) {
+                    editingData[key] = value
+                }
+                
                 if (editingData.isEmpty()) {
                     Toast.makeText(this, "Please add at least one field", Toast.LENGTH_SHORT).show()
                 } else {

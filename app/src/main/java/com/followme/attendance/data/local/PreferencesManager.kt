@@ -97,6 +97,11 @@ class PreferencesManager(context: Context) {
         val token = loadAuthToken() ?: return false
         return token.isAdmin()
     }
+
+    fun canEditTags(): Boolean {
+        val token = loadAuthToken() ?: return false
+        return token.isAdmin() || token.canEditTags
+    }
     
     // ========== Scanned Tags ==========
     

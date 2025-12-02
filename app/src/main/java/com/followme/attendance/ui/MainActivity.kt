@@ -372,9 +372,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         
-        // Show/hide admin-only items
-        val isAdmin = preferencesManager.isAdmin()
-        menu?.findItem(R.id.action_tags)?.isVisible = isAdmin
+        // Show/hide tags menu item based on permission
+        val canEditTags = preferencesManager.canEditTags()
+        menu?.findItem(R.id.action_tags)?.isVisible = canEditTags
         
         return true
     }
@@ -386,10 +386,10 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_tags -> {
-                if (preferencesManager.isAdmin()) {
+                if (preferencesManager.canEditTags()) {
                     startActivity(Intent(this, TagManagementActivity::class.java))
                 } else {
-                    Toast.makeText(this, R.string.admin_required, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Permission required", Toast.LENGTH_SHORT).show()
                 }
                 true
             }
