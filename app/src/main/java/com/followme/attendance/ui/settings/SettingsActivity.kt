@@ -30,6 +30,10 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var categoriesAdapter: KeyValueAdapter
     private lateinit var extensionsAdapter: KeyValueAdapter
     
+    private val importFileLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.GetContent()) { uri ->
+        uri?.let { importFromFile(it) }
+    }
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
@@ -113,6 +117,11 @@ class SettingsActivity : AppCompatActivity() {
         // Test API button
         binding.testApiButton.setOnClickListener {
             testApi()
+        }
+        
+        // Import Settings button
+        binding.importSettingsButton.setOnClickListener {
+            showImportDialog()
         }
         
         // Add category button
@@ -206,18 +215,93 @@ class SettingsActivity : AppCompatActivity() {
             )) {
                 is ApiResult.Success -> {
                     preferencesManager.saveAuthToken(result.data)
+                    updateAuthStatus(true)
                     Toast.makeText(this@SettingsActivity, "Authentication successful!", Toast.LENGTH_SHORT).show()
                 }
                 is ApiResult.Error -> {
+                    updateAuthStatus(false)
                     Toast.makeText(this@SettingsActivity, "Authentication failed: ${result.message}", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    // Handle other cases if any
+                    updateAuthStatus(false)
                 }
             }
         }
     }
     
+    // ========== Import Settings ==========
+    
+    private fun showImportDialog() {
+        val options = arrayOf("Clipboard", "File")
+        
+        AlertDialog.Builder(this)
+            .setTitle("Import Settings")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> importFromClipboard()
+                    1 -> importFileLauncher.launch("text/*")
+                }
+            }
+            .show()
+    }
+    
+    private fun importFromClipboard() {
+        val clipboard = getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+        if (clipboard.hasPrimaryClip()) {
+            val item = clipboard.primaryClip?.getItemAt(0)
+            val text = item?.text?.toString()
+            if (!text.isNullOrEmpty()) {
+                parseAndPopulateSettings(text)
+                Toast.makeText(this, "Settings imported from clipboard", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Clipboard is empty", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Clipboard is empty", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
+    private fun importFromFile(uri: android.net.Uri) {
+        try {
+            val inputStream = contentResolver.openInputStream(uri)
+            val reader = java.io.BufferedReader(java.io.InputStreamReader(inputStream))
+            val text = reader.readText()
+            reader.close()
+            inputStream?.close()
+            
+            parseAndPopulateSettings(text)
+            Toast.makeText(this, "Settings imported from file", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error reading file: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
+    private fun parseAndPopulateSettings(text: String) {
+        val lines = text.lines()
+        var importedCount = 0
+        
+        for (line in lines) {
+            if (line.trim().isEmpty() || !line.contains("=")) continue
+            
+            val parts = line.split("=", limit = 2)
+            if (parts.size != 2) continue
+            
+            val key = parts[0].trim()
+            val value = parts[1].trim()
+            
+            when (key) {
+                "url" -> binding.apiBaseUrlInput.setText(value)
+                "apiKey" -> binding.apiKeyInput.setText(value)
+                "username" -> binding.usernameInput.setText(value)
+                "password" -> binding.passwordInput.setText(value)
+                "authRoute" -> binding.authRouteInput.setText(value)
+                "validationRoute", "validateRoute" -> binding.validateRouteInput.setText(value)
+                "mainRoute" -> binding.mainRouteInput.setText(value)
+            }
+            importedCount++
+        }
+    }
+
     // ========== Category Management ==========
     
     private fun addCategory() {

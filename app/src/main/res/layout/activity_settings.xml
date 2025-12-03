@@ -45,6 +45,15 @@
                 android:layout_marginEnd="12dp" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/importSettingsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Import"
+                android:textSize="14sp"
+                android:layout_marginEnd="4dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/testApiButton"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"

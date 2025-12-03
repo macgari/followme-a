@@ -339,7 +339,21 @@ class MainActivity : AppCompatActivity() {
             .setSingleChoiceItems(categoryNames, currentIndex) { dialog, which ->
                 selectedCategory = categoryKeys[which]
                 binding.categoryDropdown.text = categoryNames[which]
-                repository.loadEntries()
+                
+                // Force update list with new category
+                val currentEntries = repository.entries.value
+                val filteredEntries = currentEntries.filter { it.category == selectedCategory }
+                entriesAdapter.submitList(filteredEntries)
+                
+                // Update empty state
+                if (filteredEntries.isEmpty()) {
+                    binding.emptyState.visibility = View.VISIBLE
+                    binding.entriesRecyclerView.visibility = View.GONE
+                } else {
+                    binding.emptyState.visibility = View.GONE
+                    binding.entriesRecyclerView.visibility = View.VISIBLE
+                }
+                
                 dialog.dismiss()
             }
             .setNegativeButton(R.string.cancel, null)

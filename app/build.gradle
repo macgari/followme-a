@@ -7,14 +7,14 @@ plugins {
 
 android {
     namespace 'com.followme.attendance'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.followme.attendance"
         minSdk 21
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        targetSdk 35
+        versionCode 3
+        versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -78,7 +78,9 @@ dependencies {
     implementation 'androidx.security:security-crypto:1.1.0-alpha06'
     
     // CSV parsing
-    implementation 'com.opencsv:opencsv:5.8'
+    implementation ('com.opencsv:opencsv:5.8') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
     
     // Testing
     testImplementation 'junit:junit:4.13.2'
